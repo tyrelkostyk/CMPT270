@@ -4,7 +4,7 @@ tck290
 11216033
 
 CMPT270
-Assignment 1, Question 1
+Assignment 1, Question 3
 */
 
 import java.lang.Math;

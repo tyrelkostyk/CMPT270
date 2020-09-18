@@ -19,7 +19,7 @@
  11216033
 
  CMPT270
- Assignment 1, Question 1
+ Assignment 1, Question 2
   */
 
 import java.util.Scanner;
