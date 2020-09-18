@@ -14,7 +14,6 @@ public class a1q1
 		// student's full name
 		String studentFullName = "Reptilious McFictitious";
 
-
 		/* Calculate the grades from the exercises */
 
 		// total weight of the exercises
