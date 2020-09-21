@@ -1,0 +1,158 @@
+/**
+ * Tyrel Kostyk
+ * tck290
+ * 11216033
+ *
+ * CMPT 270
+ * Assignment 2, Question 1
+ */
+
+****************** Application One: Flight Reservation System ******************
+
+Design Notes:
+- 	The LocalDate and LocalTime objects pulled from the java.time library
+-	The Trip class subclasses the Flight class, and every plan that a passenger
+	can book is contained in a Trip class; even a single flight.
+
+Class Flight
+	Attributes:
+		# timing
+		boardingTime:	LocalTime	# java.time.LocalTime
+		departureTime:	LocalTime	# java.time.LocalTime
+		arrivalTime: 	LocalTime	# java.time.LocalTime
+
+		# geographic info (assuming airports can be indexed by a String)
+		departingAirport:	String
+		arrivinfAirport:	String
+
+		# every flight is tied to a single "booking" passenger, who can also
+		# connect their family on the flight
+		tripOwner:			Passenger
+		tripParticipants:	Arrays (of Passenger objects)
+
+		# flight status variables
+		flightConfirmed:	bool
+		flightStatus:		String	# boarding, departed, etc
+
+		# plane for the flight
+		flightPlane:	Plane
+
+	Methods:
+		getItinerary		# calculate and return full trip itinerary
+
+		getCost				# return the full price of the flight
+		confirmAndPay		# confirm and pay for the flight
+		cancelFlight		# cancel the flight
+		isConfirmed			# whether the trip is confirmed (and paid for)
+
+		selectSeat			# select a seat
+
+[end of Flight Class]
+
+Class Trip extends Flight
+	Attributes:
+		# flights
+		# Trip objects always hold a list of flights, represented by an Arrays
+		# object full of Flight objects, meant to behave like a linked list
+		flightList:	Arrays (of Flight objects)
+
+	Methods:
+		getItinerary		# calculate and return full trip itinerary (overrides Flight method)
+		validateItinerary	# confirm that there are no conflicts (time, etc)
+
+		addConnectingFlight		# add a connecting flight to the trip
+		removeConnectingFlight	# remove a connecting flight from the trip
+
+		getTripCost				# return the full price breakdown of the trip
+		confirmAndPayForTrip	# confirm and pay for the trip (aka every flight)
+		cancelEntireTrip		# cancel the entire trip (aka every flight)
+[end of Trip Class]
+
+Class Plane
+	Attributes:
+		# features of the plane
+		planeModel:					String
+		economySeatsAvailable:		int
+		businessSeatsAvailable:		int
+		firstClassSeatsAvailable:	int
+
+		# status of the plane
+		planeStatus:	String	# needs minor repairs, out of commission, etc
+[end of Plane Class]
+
+Class Passenger
+	Attributes:
+		# personal information
+		firstName:		String
+		lastName:		String
+		dateOfBirth:	LocalDate
+		age:			int
+		sex:			String
+		citizenship:	String	# country the passenger is an official citizen of
+
+		rewardsPoints:	int
+
+		upcomingTrips:	Arrays (of Trip objects)
+		previousTrips:	Arrays (of Trip objects)
+
+	Methods:
+		bookATrip	# start a new trip (i.e. book new flight(s))
+		getUpcomingTrips	# display upcoming trips
+		getPreviousTrips	# display old trips
+
+		redeemRewardsPoints	# redeem rewards points as money towards a trip
+[end of Passenger class]
+
+
+********************** Application Two: A Doggie Daycare ***********************
+
+
+Class Pet:
+	Attributes:
+		# general information
+		species:	String	# species of the pet
+		breed:	String		# name of the pet's breed
+		name:	String		# name of the pet
+		age:	int			# how old the pet is
+		gender:	String		# gender of the pet
+		temperament:	String	# an owner-submitted claim of the pet's temperment
+							# and behaviour (e.g. "very calm", "territorial", etc)
+
+		owner:	Owner object	# official owner of the pet
+		currentStatus:	String	# checked in, awaiting pickup, etc
+
+		upcomingVisits:	Arrays (of Visit objects)
+		previousVisits:	Arrays (of Visit objects)
+
+	Methods:
+		checkIn
+		requestPickup
+		checkOut
+[end of Pet Class]
+
+Class Visit:
+	Attributes:
+		pet:	Pet
+		owner:	Owner
+
+		checkInTime:	LocalTime
+		checkOutTime:	LocalTime
+
+	Methods:
+
+[end of class Visit]
+
+Class Owner:
+	Attributes:
+		# personal information
+		firstName:		String
+		lastName:		String
+		dateOfBirth:	LocalDate
+		age:			int
+
+		upcomingVisits:	Arrays (of Visit objects)
+		previousVisits:	Arrays (of Visit objects)
+
+	Methods:
+
+[end of class Visit]
