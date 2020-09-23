@@ -106,6 +106,31 @@ Class Passenger
 
 ********************** Application Two: A Doggie Daycare ***********************
 
+Class Owner:
+	Attributes:
+		# personal information
+		firstName:		String
+		lastName:		String
+		dateOfBirth:	LocalDate
+		age:			int
+		phoneNumber:	String
+
+		upcomingVisits:	Arrays (of Visit objects)
+		previousVisits:	Arrays (of Visit objects)
+
+		registeredPets: Arrays (of Pet objects)
+
+	Methods:
+		registerPet	# creates and adds a Pet object to registeredPets
+		removePet	# deletes Pet object from registeredPets
+
+		# note: the following also calls the same method for the specified pet
+		bookVisit	# creates, adds a visit object to upcomingVisits
+		cancelVisit	# deletes a Visit object to upcomingVisits
+
+		updatePersonalInformation	# update Owner information
+		updatePetInformation		# update Owner's Pet information
+[end of class Owner]
 
 Class Pet:
 	Attributes:
@@ -115,8 +140,11 @@ Class Pet:
 		name:	String		# name of the pet
 		age:	int			# how old the pet is
 		gender:	String		# gender of the pet
+
+		# additional information
 		temperament:	String	# an owner-submitted claim of the pet's temperment
-							# and behaviour (e.g. "very calm", "territorial", etc)
+								# and behaviour (e.g. "very calm", "territorial", etc)
+		restrictions:	String	# dietary or allergy restrictions, etc
 
 		owner:	Owner object	# official owner of the pet
 		currentStatus:	String	# checked in, awaiting pickup, etc
@@ -125,34 +153,109 @@ Class Pet:
 		previousVisits:	Arrays (of Visit objects)
 
 	Methods:
-		checkIn
-		requestPickup
-		checkOut
+		updateInformation
+		updateTemperament
+		updateStatus
+		setOwner
+
+		addVisit
+		cancelVisit
 [end of Pet Class]
 
-Class Visit:
+Class Daycare:
 	Attributes:
-		pet:	Pet
-		owner:	Owner
+		# generalInformation
+		address:		String
+		phoneNumber:	String
 
-		checkInTime:	LocalTime
-		checkOutTime:	LocalTime
+		maxPetCount:		Int
+		currentPetCount:	Int
 
 	Methods:
+		setMaxPetCount
+		incrementPetCount
+		decrementPetCount
 
-[end of class Visit]
+[end of Daycare Class]
 
-Class Owner:
+Class Staff:
 	Attributes:
-		# personal information
+		# general information
 		firstName:		String
 		lastName:		String
 		dateOfBirth:	LocalDate
 		age:			int
+		phoneNumber:	String
 
-		upcomingVisits:	Arrays (of Visit objects)
-		previousVisits:	Arrays (of Visit objects)
+		scheduledVisits:	Arrays (of Visit objects)
+		completedVisits:	Arrays (of Visit objects)
+
+	Methods:
+		setInformation
+
+		scheduleVisit
+		completeVisit
+
+[end of Staff Class]
+
+Class Visit:
+	Attributes:
+		# pet, owner, and staff that this visit involves
+		pet:	Pet
+		owner:	Owner
+		assignedStaff:	Staff
+
+		# visit information
+		checkInTime:	LocalTime
+		checkOutTime:	LocalTime
+		visitStatus:	String
+
+		# design note: in practice, the following would likely use a custom typedef, not bool
+		visitLength:	bool	# true is full day, false is half day
+		visitTime:		bool	# true is morning, false is afternoon
+
+	Methods:
+		# basic setters
+		setPet
+		setOwner
+		setStaff
+
+		# visit status methods
+		checkPetIn			# check the associated Pet in (calls updateVisitStatus, and incrementPetCount)
+		checkPetOut			# check the associated Pet out (calls updateVisitStatus, and decrementPetCount)
+		updateVisitStatus	# update the general status of the Visit
+
+		requestPetPickUp	# call the Owner's phoneNumber to tell them their furry friend is ready to leave!
+
+[end of class Visit]
+
+
+********************* Application Three: An Emergency Room *********************
+
+Class Ward:
+	Attributes:
 
 	Methods:
 
-[end of class Visit]
+[end of Ward Class]
+
+Class Bed:
+	Attributes:
+
+	Methods:
+
+[end of Bed Class]
+
+Class Doctor:
+	Attributes:
+
+	Methods:
+
+[end of Doctor Class]
+
+Class Patient:
+	Attributes:
+
+	Methods:
+
+[end of Patient Class]
