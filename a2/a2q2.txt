@@ -106,6 +106,11 @@ Class Passenger
 
 ********************** Application Two: A Doggie Daycare ***********************
 
+Design Notes:
+- Multiple of the classes implement equivalent methods, but this is by design;
+	- e.g., the owner can "bookVisit", which would trigger the specified Pet's
+	  "addVisit", which would then create and connect a Visit object.
+
 Class Owner:
 	Attributes:
 		# personal information
@@ -153,13 +158,14 @@ Class Pet:
 		previousVisits:	Arrays (of Visit objects)
 
 	Methods:
-		updateInformation
-		updateTemperament
-		updateStatus
-		setOwner
+		setInformation	# set the Pet's personal information
+		setTemperament	# set the Pet's temperament
+		setRestrictions	# set the Pet's extra restrictions
+		setStatus		# set the current status of the Pet
+		setOwner		# set the Pet's Owner
 
-		addVisit
-		cancelVisit
+		addVisit		# add a Visit for this Pet
+		cancelVisit		# cancel a scheduled Visit
 [end of Pet Class]
 
 Class Daycare:
@@ -191,10 +197,10 @@ Class Staff:
 		completedVisits:	Arrays (of Visit objects)
 
 	Methods:
-		setInformation
+		setInformation	# update the staff's information
 
-		scheduleVisit
-		completeVisit
+		scheduleVisit	# schedule a Visit for this Staff
+		completeVisit	# complete a Visit for this Staff
 
 [end of Staff Class]
 
@@ -234,28 +240,56 @@ Class Visit:
 
 Class Ward:
 	Attributes:
+		totalBeds:	int
+
+		emptyBeds:	Arrays (of Bed objects)
+		takenBeds:	Arrays (of Bed objects)
 
 	Methods:
-
+		isABedAvailable		# are there any empty beds
+		admitPatient		# add a patient to an available Bed, and assign a Doctor
+		dischargePatient	# remove a Patient from the Bed and the Doctor's list
 [end of Ward Class]
 
 Class Bed:
 	Attributes:
+		patient:	Patient
+		isEmpty:	bool
 
 	Methods:
-
+		assignPatient
+		removePatient
 [end of Bed Class]
 
 Class Doctor:
 	Attributes:
+		patientList:	Arrays (of Patient objects)
 
 	Methods:
+		assignNewPatient	# assign a new Patient to a Doctor
+		removePatient		# remove a Patient from a Doctor's list
 
+		getPatientList
 [end of Doctor Class]
 
 Class Patient:
 	Attributes:
+		# personal information
+		firstName:			String
+		lastName:			String
+		dateOfBirth:		LocalDate
+		age:				int
+		phoneNumber:		String
+		emergencyContact:	String
+
+		assignedBed:		Bed
+		assignedDoctors:	Arrays (of Doctor objects)
 
 	Methods:
+		setInformation		# set the Patient's info
+		setAssignedBed		# set the Bed attribute (during admission)
+		assignDoctor		# assign a new Doctor to this Patient (at admission, and later if needed)
+		removeAssignedBed	# remove the assigged Bed (during discharging)
 
+		getDoctorList
 [end of Patient Class]
