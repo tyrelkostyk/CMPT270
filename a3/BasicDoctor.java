@@ -18,9 +18,9 @@ public class BasicDoctor
 
 	/**
 	 * Construct BasicDoctor object with a given name.
-	 * @param name full (space-separated) of the BasicDoctor object
+	 * @param name full (space-separated) name of the BasicDoctor object
 	 */
-	BasicDoctor ( String name )
+	BasicDoctor( String name )
 	{
 		this.fullName = name;
 	}
@@ -28,8 +28,8 @@ public class BasicDoctor
 	/* Methods */
 
 	/**
-	 * Represent the BasicDoctor class in a pretty human-readable format
-	 * @return The full name of the BasicDoctor object
+	 * Represent the BasicDoctor object in a pretty human-readable format
+	 * @return A String of all of the information contained in the BasicDoctor object
 	 */
 	public String toString()
 	{
@@ -38,7 +38,7 @@ public class BasicDoctor
 
 	/**
 	 * Set the fullName attribute of the BasicDoctor object
-	 * @param newName [description]
+	 * @param newName the new full (space separated) name of the BasicDoctor object
 	 */
 	public void setName( String newName )
 	{
@@ -60,34 +60,35 @@ public class BasicDoctor
 	 */
 	static public void main( String[] args )
 	{
+		// track detected errors
 		int errorCount = 0;
 
-		// TEST 02: test BasicDoctor with parametrized ( String name ) constructor
+		// TEST: test BasicDoctor with parametrized ( String name ) constructor
 		BasicDoctor testBasicDoctor_Constuctor = new BasicDoctor( "Tyler Semantiuk" );
 		if ( !( testBasicDoctor_Constuctor.fullName.equals("Tyler Semantiuk")) ) {
-			System.out.println("TEST 02 [parametrized constructor] FAILED");
+			System.out.println("TEST [parametrized constructor] FAILED");
 			errorCount++;
 		}
 
-		// TEST 03: test BasicDoctor setName mutator
+		// TEST: test BasicDoctor setName mutator
 		BasicDoctor testBasicDoctor_setName = new BasicDoctor( "John Smith" );
 		testBasicDoctor_setName.setName( "Jacob Bourne" );
 		if ( !( testBasicDoctor_setName.fullName.equals("Jacob Bourne")) ) {
-			System.out.println("TEST 03 [setName mutator] FAILED");
+			System.out.println("TEST [setName mutator] FAILED");
 			errorCount++;
 		}
 
-		// TEST 04: test BasicDoctor getName accessor
+		// TEST: test BasicDoctor getName accessor
 		BasicDoctor testBasicDoctor_getName = new BasicDoctor( "William Schnieder" );
 		if ( !( testBasicDoctor_getName.getName().equals("William Schnieder")) ) {
-			System.out.println("TEST 04 [getName accessor] FAILED");
+			System.out.println("TEST [getName accessor] FAILED");
 			errorCount++;
 		}
 
-		// TEST 05: test BasicDoctor toString method
+		// TEST: test BasicDoctor toString method
 		BasicDoctor testBasicDoctor_toString = new BasicDoctor( "David Beckingham" );
 		if ( !( testBasicDoctor_toString.toString().equals("Full Name: David Beckingham")) ) {
-			System.out.println("TEST 05 [toString method] FAILED");
+			System.out.println("TEST [toString method] FAILED");
 			errorCount++;
 		}
 
