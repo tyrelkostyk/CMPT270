@@ -11,14 +11,16 @@ public class BasicDoctor
 {
 	/* Attributes */
 
-	// the BasicDoctor object's full (space-separated) name
+	/**
+	 * the doctor's full (space-separated) name
+	 */
 	private String fullName;
 
 	/* Constructors */
 
 	/**
 	 * Construct BasicDoctor object with a given name.
-	 * @param name full (space-separated) name of the BasicDoctor object
+	 * @param name full (space-separated) name of the doctor
 	 */
 	BasicDoctor( String name )
 	{
