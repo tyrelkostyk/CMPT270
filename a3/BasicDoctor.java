@@ -35,7 +35,7 @@ public class BasicDoctor
 	 */
 	public String toString()
 	{
-		return "Full Name: " + fullName;
+		return "Full Name: " + this.fullName;
 	}
 
 	/**

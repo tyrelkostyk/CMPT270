@@ -42,8 +42,8 @@ public class Person
 	 */
 	public String toString()
 	{
-		return "Full Name: " + fullName +
-			 "\nHealth Card Number: " + healthCardNumber;
+		return "Full Name: " + this.fullName +
+			 "\nHealth Card Number: " + this.healthCardNumber;
 	}
 
 	/**
