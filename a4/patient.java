@@ -137,7 +137,7 @@ public class Patient extends Person
 			System.out.println("\nError: getBedLabel() didn't return 25 after calling getBedLabel(25)");
 		}
 
-		// TEST: addDoctor() and hasDoctor
+		// TEST: addDoctor() and hasDoctor()
 		String testDoc1Name = "Tom";
 		BasicDoctor testDoc1 = new BasicDoctor( testDoc1Name );
 		testPatient.addDoctor( testDoc1 );
