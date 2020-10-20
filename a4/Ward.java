@@ -12,7 +12,9 @@
   Synopsis:
      Starter File for Assignment 4
  */
- 
+
+import java.util.*;
+
 
 /**
  * A ward of a hospital with a specified number of beds with consecutive labels.
@@ -31,9 +33,9 @@ public class Ward
 
     /**
      * An array to represent the beds of the ward.  Each bed is empty (null)
-     * or else has a Person in it.
+     * or else has a Patient in it.
      */
-    private Person[] beds;
+    private Patient[] beds;
 
     /**
      * Initialize the ward with the name given, and with beds those labels are
@@ -54,7 +56,7 @@ public class Ward
 
         name = wName;
         minBedLabel = wMinBedLabel;
-        beds = new Person[wMaxBedLabel - wMinBedLabel + 1];
+        beds = new Patient[wMaxBedLabel - wMinBedLabel + 1];
     }
 
     /**
@@ -135,7 +137,7 @@ public class Ward
      * @precond isValidLabel(bedLabel) && isOccupied(bedLabel)
      * @return  the patient in the specified bed
      */
-    public Person getPerson(int bedLabel)
+    public Patient getPatient(int bedLabel)
     {
         if (! isValidLabel(bedLabel))
             throw new IllegalArgumentException("The value " + bedLabel
@@ -153,7 +155,7 @@ public class Ward
      * @param bedLabel  the label of the bed that the patient is to be assigned
      * @precond  isValidLabel(bedLabel) && !isOccupied(bedLabel)
      */
-    public void assignPersonToBed(Person p, int bedLabel)
+    public void assignPatientToBed(Patient p, int bedLabel)
     {
         if (! isValidLabel(bedLabel))
             throw new IllegalArgumentException("The value " + bedLabel
@@ -166,6 +168,35 @@ public class Ward
 
         beds[externalToInternalIndex(bedLabel)] = p;
     }
+
+	/**
+     * Return a list of available bed labels.
+     * @return ArrayList<Integer> of bed labels.
+     */
+	public ArrayList<Integer> availableBeds()
+	{
+		ArrayList<Integer> availableBeds = new ArrayList<Integer>();
+		int maxBedLabel = this.getMaxBedLabel();
+		for ( int label = minBedLabel; label<=maxBedLabel; label++ ) {
+			if ( this.isOccupied( label ) ) {
+				availableBeds.add( label );
+			}
+		}
+		return availableBeds;
+	}
+
+	/**
+     * Remove a patient from a bed.
+	 * @param bedLabel  the label of the bed that the patient is to be assigned
+     */
+	public void freeBed( int bedLabel )
+	{
+		if (! isValidLabel(bedLabel))
+            throw new IllegalArgumentException("The value " + bedLabel
+                    + " is not a valid label for a bed in the ward.");
+
+		this.beds[bedLabel] = null;
+	}
 
     /**
      * Return a String representation of the properties of the ward.
@@ -272,18 +303,18 @@ public class Ward
             numErrors++;
         }
 
-        Person p = new Person("Pete", "123456");
-        w.assignPersonToBed(p, 205);
+        Patient p = new Patient("Pete", "123456");
+        w.assignPatientToBed(p, 205);
         if (! w.isOccupied(205)) {
-            System.out.println("assignPersonToBed() or isOccupied() failed: isOccupied incorrectly returns that bed 205 is not occupied.");
+            System.out.println("assignPatientToBed() or isOccupied() failed: isOccupied incorrectly returns that bed 205 is not occupied.");
             numErrors++;
         }
-        if (w.getPerson(205) != p) {
-            System.out.println("getPerson() or isOccupied() failed: Person Pete should be in bed 205, but " + w.getPerson(205) + " is.");
+        if (w.getPatient(205) != p) {
+            System.out.println("getPatient() or isOccupied() failed: Patient Pete should be in bed 205, but " + w.getPatient(205) + " is.");
             numErrors++;
         }
-        if (! w.getPerson(205).getName().equals("Pete")) {
-            System.out.println("getPerson() or isOccupied() failed: Pete should be in bed 205, but " + w.getPerson(205) + " is.");
+        if (! w.getPatient(205).getName().equals("Pete")) {
+            System.out.println("getPatient() or isOccupied() failed: Pete should be in bed 205, but " + w.getPatient(205) + " is.");
             numErrors++;
         }
 
@@ -371,14 +402,14 @@ public class Ward
             numErrors++;
         }
 
-        p = new Person("Dan", "789456");
-        w.assignPersonToBed(p, 1);
+        p = new Patient("Dan", "789456");
+        w.assignPatientToBed(p, 1);
         if (! w.isOccupied(1)) {
-            System.out.println("assignPersonToBed() or isOccupied() failed: isOccupied incorrectly returns that bed 1 is not occupied.");
+            System.out.println("assignPatientToBed() or isOccupied() failed: isOccupied incorrectly returns that bed 1 is not occupied.");
             numErrors++;
         }
-        if (w.getPerson(1) != p) {
-            System.out.println("getPerson() or isOccupied() failed: Person Dan should be in bed 1, but " + w.getPerson(1) + " is.");
+        if (w.getPatient(1) != p) {
+            System.out.println("getPatient() or isOccupied() failed: Patient Dan should be in bed 1, but " + w.getPatient(1) + " is.");
             numErrors++;
         }
 
