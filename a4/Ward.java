@@ -167,6 +167,7 @@ public class Ward
                     + " so cannot be assigned to another patient");
 
         beds[externalToInternalIndex(bedLabel)] = p;
+		p.setBedLabel( bedLabel );
     }
 
 	/**
