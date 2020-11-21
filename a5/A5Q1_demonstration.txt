@@ -1,3 +1,18 @@
+/*
+ * CMPT 270
+ * Assignment Five
+ * Question One
+ *
+ * A5Q1_demonstration.txt
+ *
+ * Tyrel Kostyk
+ * 11216033
+ * TCK290
+ *
+ * November 20 2020
+ */
+
+
 Initializing the system...
 Getting Ward information...
 Enter the name of the Ward: myWard
