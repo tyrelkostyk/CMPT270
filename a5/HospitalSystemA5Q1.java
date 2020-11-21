@@ -1,16 +1,15 @@
 /*
-  CMPT 270 Course material
-  Copyright (c) 2020
-  All rights reserved.
-
-  This document contains resources for homework assigned to students of
-  CMPT 270 and shall not be distributed without permission.  Posting this
-  file to a public or private website, or providing this file to a person
-  not registered in CMPT 270, constitutes Academic Misconduct, according
-  to the University of Saskatchewan Policy on Academic Misconduct.
-
-  Synopsis:
-     Solution file for Assignment 4
+ * CMPT 270
+ * Assignment Five
+ * Question One
+ *
+ * HospitalSystemA5Q1.java
+ *
+ * Tyrel Kostyk
+ * 11216033
+ * TCK290
+ *
+ * November 20 2020
  */
  
 
@@ -19,12 +18,13 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Collection;
 import java.util.NoSuchElementException;
+import java.util.LinkedList;
 
 /**
- * A simple hospital system with only one ward.  Patients and doctors can be created,
+ * A simple hospital system with only one ward. Patients and doctors can be created,
  * and patients assigned to a doctor and/or placed in a bed of the ward.
  */
-public class HospitalSystem
+public class HospitalSystemA5Q1
 {
     /** 
     One Scanner for all methods 
@@ -50,7 +50,7 @@ public class HospitalSystem
      * Initialize an instance of the hospital ward
      * relies on user-input to get the relavent information
      */
-    public HospitalSystem() {
+    public HospitalSystemA5Q1() {
 
         patients = new TreeMap<String, Patient>();
         doctors = new TreeMap<String, Doctor>();
@@ -242,8 +242,8 @@ public class HospitalSystem
     }
 
     /**
-     * Return a string representation of the HospitalSystem
-     * @return a string representation of the HospitalSystem
+     * Return a string representation of the HospitalSystemA5Q1
+     * @return a string representation of the HospitalSystemA5Q1
      */
     public String toString() {
         String result = "\nThe patients in the system are \n";
@@ -260,12 +260,14 @@ public class HospitalSystem
 
     /**
      * Display the empty beds for the ward.
-     * Method is just a stub, needs to be implemented
      */
     public void displayEmptyBeds()
     {
-        // TODO: implement stub
-        System.out.println("TODO: method not complete");
+        LinkedList<Integer> availableBedList = ward.availableBeds();
+
+        System.out.println("\nThe following beds are available:");
+        for (Integer bedLabel: availableBedList)
+            System.out.println("bed " + bedLabel);
     }
 
 
@@ -275,9 +277,23 @@ public class HospitalSystem
      */
     public void releasePatient()
     {
-        // TODO: implement stub
-        System.out.println("TODO: method not complete");
+        System.out.println("Releasing a Patient from a Bed...");
+        System.out.print("Enter the health number of the patient: ");
+        String healthNumber = consoleIn.next();
+        consoleIn.nextLine();   // discard the remainder of the line
 
+        Patient p = patients.get(healthNumber);
+        if (p == null)
+            throw new NoSuchElementException("There is no patient with health number "
+                    + healthNumber);
+
+        int bedNum = p.getBedLabel();
+        if (bedNum == -1)
+            throw new IllegalStateException(" Patient " + p
+                    + " is currently not in a bed, so they cannot be released from one");
+
+        p.setBedLabel(-1);
+        ward.freeBed(bedNum);
     }
 
     /**
@@ -287,14 +303,14 @@ public class HospitalSystem
     public static void main(String[] args)
     {
         int task = -1;
-        HospitalSystem sys;
+        HospitalSystemA5Q1 sys;
 
         System.out.println("Initializing the system...");
         
         while (true) {
             // keep trying until the user enters the data correctly
             try {
-                sys = new HospitalSystem();
+                sys = new HospitalSystemA5Q1();
                 break;
             }
             catch (RuntimeException e) {
@@ -305,7 +321,7 @@ public class HospitalSystem
         while(task != 1) {
             try
             {
-                System.out.print("Options:"
+                System.out.print("\nOptions:"
                         + "\n\t1: quit"
                         + "\n\t2: add a new patient"
                         + "\n\t3: add a new doctor"
@@ -327,6 +343,7 @@ public class HospitalSystem
                 task = Integer.parseInt(entered);
                 consoleIn.nextLine();  // consume any fluff at the end of the line
 
+                System.out.println();
 
                 if      (task == 1) sys.systemState();
                 else if (task == 2) sys.addPatient();

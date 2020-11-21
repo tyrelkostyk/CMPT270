@@ -1,0 +1,184 @@
+Initializing the system...
+Getting Ward information...
+Enter the name of the Ward: myWard
+Entered: myWard
+Enter the integer label of the first bed: 1
+Entered: 1
+Enter the integer label of the last bed: 10
+Entered: 10
+
+Options:
+	1: quit
+	2: add a new patient
+	3: add a new doctor
+	4: assign a doctor to a patient
+	5: display the empty beds of the ward
+	6: assign a patient a bed
+	7: release a patient
+	8: drop doctor-patient association
+	9: display current system state
+Enter your selection {1-9}: 5
+
+The following beds are available:
+bed 1
+bed 2
+bed 3
+bed 4
+bed 5
+bed 6
+bed 7
+bed 8
+bed 9
+bed 10
+
+Options:
+	1: quit
+	2: add a new patient
+	3: add a new doctor
+	4: assign a doctor to a patient
+	5: display the empty beds of the ward
+	6: assign a patient a bed
+	7: release a patient
+	8: drop doctor-patient association
+	9: display current system state
+Enter your selection {1-9}: 2
+
+Adding Patient to Ward...
+Enter the name of the patient: Gunther
+Entered: Gunther
+Enter the health number of the patient: 123456789
+Entered: 123456789
+
+Options:
+	1: quit
+	2: add a new patient
+	3: add a new doctor
+	4: assign a doctor to a patient
+	5: display the empty beds of the ward
+	6: assign a patient a bed
+	7: release a patient
+	8: drop doctor-patient association
+	9: display current system state
+Enter your selection {1-9}: 2
+
+Adding Patient to Ward...
+Enter the name of the patient: Pingu
+Entered: Pingu
+Enter the health number of the patient: 111222333
+Entered: 111222333
+
+Options:
+	1: quit
+	2: add a new patient
+	3: add a new doctor
+	4: assign a doctor to a patient
+	5: display the empty beds of the ward
+	6: assign a patient a bed
+	7: release a patient
+	8: drop doctor-patient association
+	9: display current system state
+Enter your selection {1-9}: 6
+
+Assigning a Patient to a Bed...
+Enter the health number of the patient: 123456789
+Enter the bed number for the patient: 1
+
+Options:
+	1: quit
+	2: add a new patient
+	3: add a new doctor
+	4: assign a doctor to a patient
+	5: display the empty beds of the ward
+	6: assign a patient a bed
+	7: release a patient
+	8: drop doctor-patient association
+	9: display current system state
+Enter your selection {1-9}: 5
+
+The following beds are available:
+bed 2
+bed 3
+bed 4
+bed 5
+bed 6
+bed 7
+bed 8
+bed 9
+bed 10
+
+Options:
+	1: quit
+	2: add a new patient
+	3: add a new doctor
+	4: assign a doctor to a patient
+	5: display the empty beds of the ward
+	6: assign a patient a bed
+	7: release a patient
+	8: drop doctor-patient association
+	9: display current system state
+Enter your selection {1-9}: 7
+
+Releasing a Patient from a Bed...
+Enter the health number of the patient: 1223456789
+
+Options:
+	1: quit
+	2: add a new patient
+	3: add a new doctor
+	4: assign a doctor to a patient
+	5: display the empty beds of the ward
+	6: assign a patient a bed
+	7: release a patient
+	8: drop doctor-patient association
+	9: display current system state
+Enter your selection {1-9}: 5
+
+The following beds are available:
+bed 1
+bed 2
+bed 3
+bed 4
+bed 5
+bed 6
+bed 7
+bed 8
+bed 9
+bed 10
+
+Options:
+	1: quit
+	2: add a new patient
+	3: add a new doctor
+	4: assign a doctor to a patient
+	5: display the empty beds of the ward
+	6: assign a patient a bed
+	7: release a patient
+	8: drop doctor-patient association
+	9: display current system state
+Enter your selection {1-9}: 1
+
+The patients in the system are 
+
+Name: Pingu
+Health card number: 111222333
+with doctors 
+
+Name: Gunther
+Health card number: 123456789
+with doctors 
+
+The doctors in the system are 
+
+The ward is 
+Ward myWard with capacity 10 has the following patients: 
+bed 1: 
+bed 2: 
+bed 3: 
+bed 4: 
+bed 5: 
+bed 6: 
+bed 7: 
+bed 8: 
+bed 9: 
+bed 10: 
+
