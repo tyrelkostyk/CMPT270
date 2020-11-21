@@ -1,9 +1,9 @@
 /*
  * CMPT 270
  * Assignment Five
- * Question Three
+ * Question Four
  *
- * HospitalSystemA5Q3.java
+ * HospitalSystemA5Q4.java
  *
  * Tyrel Kostyk
  * 11216033
@@ -11,7 +11,7 @@
  *
  * November 20 2020
  */
- 
+
 import java.util.TreeMap;
 import java.util.Map;
 import java.util.Collection;
@@ -23,17 +23,12 @@ import java.util.LinkedList;
  * A simple hospital system with only one ward. Patients and doctors can be created,
  * and patients assigned to a doctor and/or placed in a bed of the ward.
  */
-public class HospitalSystemA5Q3
+public class HospitalSystemA5Q4
 {
     /** 
     One DialogIO for all methods 
     */
     private static DialogIO io = new DialogIO();
-
-    /**
-     * The keyed dictionary of all patients.
-     */
-    private Map<String, Patient> patients;
 
     /**
      * The keyed dictionary of all doctors.
@@ -49,9 +44,8 @@ public class HospitalSystemA5Q3
      * Initialize an instance of the hospital ward
      * relies on user-input to get the relavent information
      */
-    public HospitalSystemA5Q3() {
+    public HospitalSystemA5Q4() {
 
-        patients = new TreeMap<String, Patient>();
         doctors = new TreeMap<String, Doctor>();
 
         // get the ward information
@@ -80,18 +74,18 @@ public class HospitalSystemA5Q3
         String healthNum = io.readString("Enter the health number of the patient: ");
         io.outputString("Entered: " + healthNum);
 
-        if (patients.containsKey(healthNum))
+        if (PatientMapAccess.getInstance().containsKey(healthNum))
         {
             throw new  IllegalStateException("Patient with the health number " + healthNum + " already exsists");
         }
 
         Patient p = new Patient(name, healthNum);
-        Patient result = patients.put(healthNum, p);
+        Patient result = PatientMapAccess.getInstance().put(healthNum, p);
 
         // checking to make sure the the key was unique
         if (result != null)
         {
-            patients.put(healthNum, result);  // put the original patient back
+            PatientMapAccess.getInstance().put(healthNum, result);  // put the original patient back
             throw new IllegalStateException("Health number in the patient dictionary even "
                     + "though containsKey failed.  Number " + healthNum + " not entered.");
         }
@@ -137,7 +131,7 @@ public class HospitalSystemA5Q3
         io.outputString("Assigning a new Doctor-Patient Association...");
         String healthNumber = io.readString("Enter the health number of the patient: ");
 
-        Patient p = patients.get(healthNumber);
+        Patient p = PatientMapAccess.getInstance().get(healthNumber);
         if (p == null)
             throw new NoSuchElementException("There is no patient with health number "
                     + healthNumber);
@@ -163,7 +157,7 @@ public class HospitalSystemA5Q3
         io.outputString("Assigning a Patient to a Bed...");
         String healthNumber = io.readString("Enter the health number of the patient: ");
 
-        Patient p = patients.get(healthNumber);
+        Patient p = PatientMapAccess.getInstance().get(healthNumber);
         if (p == null)
             throw new NoSuchElementException("There is no patient with health number "
                     + healthNumber);
@@ -192,7 +186,7 @@ public class HospitalSystemA5Q3
         io.outputString("Getting Patient information...");
         String healthNumber = io.readString("Enter the health number of the patient: ");
 
-        Patient p = patients.get(healthNumber);
+        Patient p = PatientMapAccess.getInstance().get(healthNumber);
         if (p == null)
             throw new NoSuchElementException("There is no patient with health number "
                     + healthNumber);
@@ -225,12 +219,12 @@ public class HospitalSystemA5Q3
     }
 
     /**
-     * Return a string representation of the HospitalSystemA5Q3
-     * @return a string representation of the HospitalSystemA5Q3
+     * Return a string representation of the HospitalSystemA5Q4
+     * @return a string representation of the HospitalSystemA5Q4
      */
     public String toString() {
         String result = "\nThe patients in the system are \n";
-        Collection<Patient> patientsColl = patients.values();
+        Collection<Patient> patientsColl = PatientMapAccess.getInstance().values();
         for (Patient p: patientsColl)
             result = result + p;
         result = result + "\nThe doctors in the system are \n";
@@ -263,7 +257,7 @@ public class HospitalSystemA5Q3
         io.outputString("Releasing a Patient from a Bed...");
         String healthNumber = io.readString("Enter the health number of the patient: ");
 
-        Patient p = patients.get(healthNumber);
+        Patient p = PatientMapAccess.getInstance().get(healthNumber);
         if (p == null)
             throw new NoSuchElementException("There is no patient with health number "
                     + healthNumber);
@@ -284,14 +278,14 @@ public class HospitalSystemA5Q3
     public static void main(String[] args)
     {
         int task = -1;
-        HospitalSystemA5Q3 sys;
+        HospitalSystemA5Q4 sys;
 
         io.outputString("Initializing the system...");
         
         while (true) {
             // keep trying until the user enters the data correctly
             try {
-                sys = new HospitalSystemA5Q3();
+                sys = new HospitalSystemA5Q4();
                 break;
             }
             catch (RuntimeException e) {
