@@ -1,9 +1,9 @@
 /*
  * CMPT 270
  * Assignment Five
- * Question Two
+ * Question Three
  *
- * HospitalSystemA5Q2.java
+ * HospitalSystemA5Q3.java
  *
  * Tyrel Kostyk
  * 11216033
@@ -24,12 +24,12 @@ import java.util.LinkedList;
  * A simple hospital system with only one ward. Patients and doctors can be created,
  * and patients assigned to a doctor and/or placed in a bed of the ward.
  */
-public class HospitalSystemA5Q2
+public class HospitalSystemA5Q3
 {
     /** 
-    One ConsoleIO for all methods 
+    One DialogIO for all methods 
     */
-    private static ConsoleIO io = new ConsoleIO();
+    private static DialogIO io = new DialogIO();
 
     /**
      * The keyed dictionary of all patients.
@@ -50,7 +50,7 @@ public class HospitalSystemA5Q2
      * Initialize an instance of the hospital ward
      * relies on user-input to get the relavent information
      */
-    public HospitalSystemA5Q2() {
+    public HospitalSystemA5Q3() {
 
         patients = new TreeMap<String, Patient>();
         doctors = new TreeMap<String, Doctor>();
@@ -226,8 +226,8 @@ public class HospitalSystemA5Q2
     }
 
     /**
-     * Return a string representation of the HospitalSystemA5Q2
-     * @return a string representation of the HospitalSystemA5Q2
+     * Return a string representation of the HospitalSystemA5Q3
+     * @return a string representation of the HospitalSystemA5Q3
      */
     public String toString() {
         String result = "\nThe patients in the system are \n";
@@ -285,14 +285,14 @@ public class HospitalSystemA5Q2
     public static void main(String[] args)
     {
         int task = -1;
-        HospitalSystemA5Q2 sys;
+        HospitalSystemA5Q3 sys;
 
         io.outputString("Initializing the system...");
         
         while (true) {
             // keep trying until the user enters the data correctly
             try {
-                sys = new HospitalSystemA5Q2();
+                sys = new HospitalSystemA5Q3();
                 break;
             }
             catch (RuntimeException e) {
@@ -315,10 +315,7 @@ public class HospitalSystemA5Q2
         while (task != 0) {
             try
             {
-                io.outputString("\nOptions:");
                 task = io.readChoice(options);
-
-                io.outputString("\n");
 
                 if      (task == 0) sys.systemState();
                 else if (task == 1) sys.addPatient();
