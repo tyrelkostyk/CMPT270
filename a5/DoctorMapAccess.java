@@ -3,7 +3,7 @@
  * Assignment Five
  * Question Four
  *
- * PatientMapAccess.java
+ * DoctorMapAccess.java
  *
  * Tyrel Kostyk
  * 11216033
@@ -15,28 +15,28 @@
 import java.util.TreeMap;
 
 
-public class PatientMapAccess
+public class DoctorMapAccess
 {
 
     /**
-     * The keyed dictionary of all patients.
+     * The keyed dictionary of all doctors.
      */
-    private static TreeMap<String, Patient> dictionary;
+    private static TreeMap<String, Doctor> dictionary;
 
     /**
      * The Private Constructor.
      */
-    private PatientMapAccess() {}
+    private DoctorMapAccess() {}
 
     /**
-     * Return the dictionary that maps to Patients.
-     * @return the dictionary that maps to Patients.
+     * Return the dictionary that maps to Doctors.
+     * @return the dictionary that maps to Doctors.
      */
-    public static TreeMap<String, Patient> getInstance()
+    public static TreeMap<String, Doctor> getInstance()
     {
         // create dictionary if not done so yet
         if (dictionary == null)
-            dictionary = new TreeMap<String, Patient>();
+            dictionary = new TreeMap<String, Doctor>();
 
         // return dictionary
         return dictionary;

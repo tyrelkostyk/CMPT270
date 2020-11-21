@@ -58,26 +58,18 @@ public class ConsoleIO implements InputOutputInterface
      */
     public int readInt(String prompt)
     {
-        int intInput = -1;
         String input = "";
+        int intInput = -1;
 
-        while (true) {
-            // keep trying until the user enters an int correctly
-            try {
-                System.out.print(prompt + " ");
-                input = consoleIn.nextLine();
-
-                if (! input.isEmpty()) {
-                    intInput = Integer.parseInt(input);
-                    return intInput;
-                }
-
-                System.out.println("No input received... please try again.");
-            
-            } catch (NumberFormatException e) {
-                System.out.println("Input was not an integer... please try again.");
-                input = "";
-            }
+        // keep trying until the user enters an int correctly
+        try {
+            input = readString(prompt);
+            intInput = Integer.parseInt(input);
+            return intInput;
+        
+        } catch (NumberFormatException e) {
+            System.out.println("Input was not an integer... please try again.");
+            return readInt(prompt);
         }
     }
 
@@ -92,36 +84,22 @@ public class ConsoleIO implements InputOutputInterface
      */
     public int readChoice(String[] options)
     {
-        int intInput = -1;
         int minChoice = 1;
         int maxChoice = options.length;
-        String input = "";
 
-        int listedChoice;
-        while (true) {
-            // keep trying until the user enters an int correctly
-            try {
-                listedChoice = minChoice;
-                for (String option: options) {
-                    System.out.println(listedChoice + ": " + option);
-                    listedChoice++;
-                }
-
-                System.out.print("Please choose your desired choice {" + minChoice + " - " + maxChoice + "}: ");
-
-                input = consoleIn.nextLine();
-                intInput = Integer.parseInt(input);
-
-                // if valid, return the array index of the choice selected
-                if ((! input.isEmpty()) && (intInput >= minChoice && intInput <= maxChoice))
-                    return intInput - 1;
-
-                System.out.println("Invalid input... please try again.");
-
-            } catch (NumberFormatException e) {
-                System.out.println("Input was not an integer... please try again.");
-            }
+        int listedChoice = minChoice;
+        for (String option: options) {
+            System.out.println(listedChoice + ": " + option);
+            listedChoice++;
         }
+
+        int intInput = readInt("Please choose your desired choice {" + minChoice + " - " + maxChoice + "}: ");
+
+        if (intInput >= minChoice && intInput <= maxChoice)
+            return intInput - 1;
+
+        System.out.println("Input was not a valid option... please try again.");
+        return readChoice(options);
     }
 
     /**

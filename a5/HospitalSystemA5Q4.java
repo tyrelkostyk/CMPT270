@@ -12,8 +12,6 @@
  * November 20 2020
  */
 
-import java.util.TreeMap;
-import java.util.Map;
 import java.util.Collection;
 import java.util.NoSuchElementException;
 import java.util.LinkedList;
@@ -25,40 +23,24 @@ import java.util.LinkedList;
  */
 public class HospitalSystemA5Q4
 {
-    /** 
-    One DialogIO for all methods 
-    */
-    private static DialogIO io = new DialogIO();
-
-    /**
-     * The keyed dictionary of all doctors.
-     */
-    private Map<String, Doctor> doctors;
-
-    /**
-     * The ward to be handled.
-     */
-    private Ward ward;
-
     /**
      * Initialize an instance of the hospital ward
      * relies on user-input to get the relavent information
      */
-    public HospitalSystemA5Q4() {
-
-        doctors = new TreeMap<String, Doctor>();
-
+    public HospitalSystemA5Q4()
+    {
         // get the ward information
-        io.outputString("Getting Ward information...");
-        String name = io.readString("Enter the name of the Ward: ");
-        io.outputString("Entered: " + name);
-        int firstBedNum = io.readInt("Enter the integer label of the first bed: ");
-        io.outputString("Entered: " + firstBedNum);
+        IOAccess.getInstance().outputString("Getting Ward information...");
+        String name = IOAccess.getInstance().readString("Enter the name of the Ward: ");
+        IOAccess.getInstance().outputString("Entered: " + name);
+        int firstBedNum = IOAccess.getInstance().readInt("Enter the integer label of the first bed: ");
+        IOAccess.getInstance().outputString("Entered: " + firstBedNum);
 
-        int lastBedNum =  io.readInt("Enter the integer label of the last bed: ");
-        io.outputString("Entered: " + lastBedNum);
+        int lastBedNum =  IOAccess.getInstance().readInt("Enter the integer label of the last bed: ");
+        IOAccess.getInstance().outputString("Entered: " + lastBedNum);
 
-        ward = new Ward(name, firstBedNum, lastBedNum);
+        // initialize the Ward
+        WardAccess.initialize(name, firstBedNum, lastBedNum);
     }
 
     /**
@@ -67,12 +49,12 @@ public class HospitalSystemA5Q4
      */
     public void addPatient()
     {
-        io.outputString("Adding Patient to Ward...");
-        String name = io.readString("Enter the name of the patient: ");
-        io.outputString("Entered: " + name);
+        IOAccess.getInstance().outputString("Adding Patient to Ward...");
+        String name = IOAccess.getInstance().readString("Enter the name of the patient: ");
+        IOAccess.getInstance().outputString("Entered: " + name);
 
-        String healthNum = io.readString("Enter the health number of the patient: ");
-        io.outputString("Entered: " + healthNum);
+        String healthNum = IOAccess.getInstance().readString("Enter the health number of the patient: ");
+        IOAccess.getInstance().outputString("Entered: " + healthNum);
 
         if (PatientMapAccess.getInstance().containsKey(healthNum))
         {
@@ -97,15 +79,15 @@ public class HospitalSystemA5Q4
      */
     public void addDoctor()
     {
-        io.outputString("Adding Doctor to Ward...");
-        String name = io.readString("Enter the name of the doctor: ");
-        io.outputString("Entered: " + name);
-        if (doctors.containsKey(name))
+        IOAccess.getInstance().outputString("Adding Doctor to Ward...");
+        String name = IOAccess.getInstance().readString("Enter the name of the doctor: ");
+        IOAccess.getInstance().outputString("Entered: " + name);
+        if (DoctorMapAccess.getInstance().containsKey(name))
             throw new IllegalStateException("Doctor not added as there already "
                     + "is a doctor with the name " + name);
 
-        String response = io.readString("Is the doctor a surgeon? (yes or no)");
-        io.outputString("Entered: " + response);
+        String response = IOAccess.getInstance().readString("Is the doctor a surgeon? (yes or no)");
+        IOAccess.getInstance().outputString("Entered: " + response);
 
         Doctor d;
         if (response.charAt(0) == 'y' || response.charAt(0) == 'Y')
@@ -114,10 +96,10 @@ public class HospitalSystemA5Q4
             d = new Doctor(name);
 
         // check to make sure the doctor name doesn't already exist
-        Doctor sameNumberDoctor = doctors.put(name, d);
+        Doctor sameNumberDoctor = DoctorMapAccess.getInstance().put(name, d);
         if (sameNumberDoctor != null)
         {
-            doctors.put(name, sameNumberDoctor); // put the original doctor back
+            DoctorMapAccess.getInstance().put(name, sameNumberDoctor); // put the original doctor back
             throw new IllegalStateException("Name in the doctor dictionary even though "
                     + "containsKey failed.  Name "  + name + " not entered.");
         }
@@ -128,18 +110,18 @@ public class HospitalSystemA5Q4
      */
     public void assignDoctorToPatient()
     {
-        io.outputString("Assigning a new Doctor-Patient Association...");
-        String healthNumber = io.readString("Enter the health number of the patient: ");
+        IOAccess.getInstance().outputString("Assigning a new Doctor-Patient Association...");
+        String healthNumber = IOAccess.getInstance().readString("Enter the health number of the patient: ");
 
         Patient p = PatientMapAccess.getInstance().get(healthNumber);
         if (p == null)
             throw new NoSuchElementException("There is no patient with health number "
                     + healthNumber);
 
-        io.outputString("Getting Doctor information...");
-        String name = io.readString("Enter the name of the doctor: ");
+        IOAccess.getInstance().outputString("Getting Doctor information...");
+        String name = IOAccess.getInstance().readString("Enter the name of the doctor: ");
 
-        Doctor d = doctors.get(name);
+        Doctor d = DoctorMapAccess.getInstance().get(name);
         if (d == null)
             throw new NoSuchElementException("There is no doctor with name " + name);
         else
@@ -154,8 +136,8 @@ public class HospitalSystemA5Q4
      */
     public void assignBed()
     {
-        io.outputString("Assigning a Patient to a Bed...");
-        String healthNumber = io.readString("Enter the health number of the patient: ");
+        IOAccess.getInstance().outputString("Assigning a Patient to a Bed...");
+        String healthNumber = IOAccess.getInstance().readString("Enter the health number of the patient: ");
 
         Patient p = PatientMapAccess.getInstance().get(healthNumber);
         if (p == null)
@@ -166,15 +148,15 @@ public class HospitalSystemA5Q4
             throw new IllegalStateException(" Patient " + p
                     + " is already in a bed so cannot be assigned a new bed");
 
-        int bedNum = io.readInt("Enter the bed number for the patient: ");
+        int bedNum = IOAccess.getInstance().readInt("Enter the bed number for the patient: ");
 
-        if (bedNum < ward.getMinBedLabel() || bedNum > ward.getMaxBedLabel())
+        if (bedNum < WardAccess.getInstance().getMinBedLabel() || bedNum > WardAccess.getInstance().getMaxBedLabel())
             throw new IllegalArgumentException("Bed label " + bedNum + " is not valid, as "
-                    + "the value must be between " + ward.getMinBedLabel()
-                    + " and " + ward.getMaxBedLabel());
+                    + "the value must be between " + WardAccess.getInstance().getMinBedLabel()
+                    + " and " + WardAccess.getInstance().getMaxBedLabel());
 
         p.setBedLabel(bedNum);
-        ward.assignPatientToBed(p, bedNum);
+        WardAccess.getInstance().assignPatientToBed(p, bedNum);
     }
 
     /**
@@ -182,19 +164,19 @@ public class HospitalSystemA5Q4
      */
     public void dropAssociation()
     {
-        io.outputString("Dropping a new Doctor-Patient Association...");
-        io.outputString("Getting Patient information...");
-        String healthNumber = io.readString("Enter the health number of the patient: ");
+        IOAccess.getInstance().outputString("Dropping a new Doctor-Patient Association...");
+        IOAccess.getInstance().outputString("Getting Patient information...");
+        String healthNumber = IOAccess.getInstance().readString("Enter the health number of the patient: ");
 
         Patient p = PatientMapAccess.getInstance().get(healthNumber);
         if (p == null)
             throw new NoSuchElementException("There is no patient with health number "
                     + healthNumber);
 
-        io.outputString("Getting Doctor information...");
-        String name = io.readString("Enter the name of the doctor: ");
+        IOAccess.getInstance().outputString("Getting Doctor information...");
+        String name = IOAccess.getInstance().readString("Enter the name of the doctor: ");
 
-        Doctor d = doctors.get(name);
+        Doctor d = DoctorMapAccess.getInstance().get(name);
         if (d == null)
             throw new NoSuchElementException("There is no doctor with name " + name);
 
@@ -215,7 +197,7 @@ public class HospitalSystemA5Q4
      */
     public void systemState()
     {
-        io.outputString(this.toString());
+        IOAccess.getInstance().outputString(this.toString());
     }
 
     /**
@@ -228,10 +210,10 @@ public class HospitalSystemA5Q4
         for (Patient p: patientsColl)
             result = result + p;
         result = result + "\nThe doctors in the system are \n";
-        Collection<Doctor> doctorsColl = doctors.values();
+        Collection<Doctor> doctorsColl = DoctorMapAccess.getInstance().values();
         for (Doctor d: doctorsColl)
             result = result + d;
-        result = result + "\nThe ward is " + ward;
+        result = result + "\nThe ward is " + WardAccess.getInstance();
         return result;
     }
 
@@ -240,11 +222,11 @@ public class HospitalSystemA5Q4
      */
     public void displayEmptyBeds()
     {
-        LinkedList<Integer> availableBedList = ward.availableBeds();
+        LinkedList<Integer> availableBedList = WardAccess.getInstance().availableBeds();
 
-        io.outputString("\nThe following beds are available:");
+        IOAccess.getInstance().outputString("\nThe following beds are available:");
         for (Integer bedLabel: availableBedList)
-            io.outputString("bed " + bedLabel);
+            IOAccess.getInstance().outputString("bed " + bedLabel);
     }
 
 
@@ -254,8 +236,8 @@ public class HospitalSystemA5Q4
      */
     public void releasePatient()
     {
-        io.outputString("Releasing a Patient from a Bed...");
-        String healthNumber = io.readString("Enter the health number of the patient: ");
+        IOAccess.getInstance().outputString("Releasing a Patient from a Bed...");
+        String healthNumber = IOAccess.getInstance().readString("Enter the health number of the patient: ");
 
         Patient p = PatientMapAccess.getInstance().get(healthNumber);
         if (p == null)
@@ -268,7 +250,7 @@ public class HospitalSystemA5Q4
                     + " is currently not in a bed, so they cannot be released from one");
 
         p.setBedLabel(-1);
-        ward.freeBed(bedNum);
+        WardAccess.getInstance().freeBed(bedNum);
     }
 
     /**
@@ -280,7 +262,21 @@ public class HospitalSystemA5Q4
         int task = -1;
         HospitalSystemA5Q4 sys;
 
-        io.outputString("Initializing the system...");
+        // temporary console IO object to ask the user what type of IO they want
+        ConsoleIO initIO = new ConsoleIO();
+        
+        String IOOptions[] = {
+            "Console IO",
+            "Dialog IO",
+        };
+
+        // ask the user what type of IO they want
+        int IOChoice = initIO.readChoice(IOOptions);
+
+        // initialize the IO
+        IOAccess.initialize(IOChoice);
+
+        IOAccess.getInstance().outputString("Initializing the system...");
         
         while (true) {
             // keep trying until the user enters the data correctly
@@ -289,7 +285,7 @@ public class HospitalSystemA5Q4
                 break;
             }
             catch (RuntimeException e) {
-                io.outputString(e.getMessage());
+                IOAccess.getInstance().outputString(e.getMessage());
             }
         }
 
@@ -308,7 +304,7 @@ public class HospitalSystemA5Q4
         while (task != 0) {
             try
             {
-                task = io.readChoice(options);
+                task = IOAccess.getInstance().readChoice(options);
 
                 if      (task == 0) sys.systemState();
                 else if (task == 1) sys.addPatient();
@@ -319,14 +315,14 @@ public class HospitalSystemA5Q4
                 else if (task == 6) sys.releasePatient();
                 else if (task == 7) sys.dropAssociation();
                 else if (task == 8) sys.systemState();
-                else io.outputString("Invalid option, try again.");
+                else IOAccess.getInstance().outputString("Invalid option, try again.");
             } 
             catch (RuntimeException e) {
                 // No matter what  exception is thrown, this catches it
                 // Dealing with it means discarding whatever went wrong 
                 // and starting the loop over.  Easy for the programmer,
                 // tedious for the user.
-                io.outputString(e.getMessage());
+                IOAccess.getInstance().outputString(e.getMessage());
             }
         }
     }
