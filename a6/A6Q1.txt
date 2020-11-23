@@ -70,3 +70,9 @@ New:
 Question A6Q1 - 2. Allowing movement with keys A and D
 ================================================================================
 
+## File: model/Laser.java
+
+Previous:
+    public static int MOVE_DISTANCE = 6;
+New:
+    public static int MOVE_DISTANCE = 12;

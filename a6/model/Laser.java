@@ -8,7 +8,7 @@ public class Laser extends GameObject {
     public static final int HEIGHT = 25;
 
     /** The distance to move when it is time to move. */
-    public static int MOVE_DISTANCE = 6;
+    public static int MOVE_DISTANCE = 12;
 
     /** How frequently (in terms of ticks) the laser is to change image. */
     public static final int CHANGE_FREQ = 4;
