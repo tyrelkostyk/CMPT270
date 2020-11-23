@@ -1,0 +1,64 @@
+/*
+ * CMPT 270
+ * Assignment 6A
+ * Question Two
+ *
+ * A6Q2.txt
+ *
+ * Tyrel Kostyk
+ * 11216033
+ * TCK290
+ *
+ * November 27 2020
+ */
+
+================================================================================
+Question A6Q2 - 1. Planning the improvement of the Game's graphical appearance
+================================================================================
+
+## File: SpaceInvaders.properties
+    - add more images to the "invader" property, allowing for more fluid movement
+    - add an image specifically for when the invader is launching a missile
+
+## File: model/Invader.java
+    - double the drawing frequency (so the Invader image is updated twice as often)
+        Previous:
+            public static final int CHANGE_FREQ = 12;
+        New:
+            public static final int CHANGE_FREQ = 6;
+    - update the invader's drawing every Invader::update() call
+    - BUT only update the Invader's movements (or other actions) every second update()
+        - This ensures that the gameplay and behaviour of the Invaders doesn't change,
+          since we doubled the update frequency
+
+
+================================================================================
+Question A6Q2 - 2. Planning the feature that allows users to set their controls
+================================================================================
+
+## File: SpaceInvaders.properties
+    - add row: move_left_key="A"
+    - add row: move_right_key="D"
+    - add row: fire_nuke_key="SPACE"
+    - add row: pause_key="ESCAPE"
+        - these will be configurable by the user
+
+## File: control/Controls.java
+    - add four private variables (ints) for the configurable control keys
+    - add a method that uses PropertiesDiskStorage to scan for the four "_key"
+      properties that determine the user's controls
+        - invoke this method during initialization
+        - it will set four private variables that will be used in the keyReleased()
+          method to perform actions in the game
+
+BONUS:
+    - Add another interface element that would allow the user to SET the controls
+      from WITHIN the game, instead of having to edit the configuration directly.
+
+
+================================================================================
+Question A6Q2 - 3. Planning the new "NUKE" weapon implementation
+================================================================================
+
+## File: SpaceInvaders.properties
+    - add row: fire_nuke_key="F"

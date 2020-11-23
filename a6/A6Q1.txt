@@ -50,24 +50,18 @@ Question A6Q1 - 2. Allowing movement with keys A and D
 
 Previous:
     case (KeyEvent.VK_LEFT):
-        gameControl.getPlayer().moveLeft();
-        break;
+...
     case (KeyEvent.VK_RIGHT):
-        gameControl.getPlayer().moveRight();
-        break;    
 New:
     case (KeyEvent.VK_A):
-    case (KeyEvent.VK_LEFT):
-        gameControl.getPlayer().moveLeft();
-        break;
+...
     case (KeyEvent.VK_D):
-    case (KeyEvent.VK_RIGHT):
-        gameControl.getPlayer().moveRight();
-        break;
 
+NOTE: The assignment wasn't clear, so it was assumed that the intent was to move
+with A or D *instead* of the arrow keys, not *also* the arrow keys.
 
 ================================================================================
-Question A6Q1 - 2. Allowing movement with keys A and D
+Question A6Q1 - 3. Doubling the speed of the Laser
 ================================================================================
 
 ## File: model/Laser.java

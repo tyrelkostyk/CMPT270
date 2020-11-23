@@ -95,11 +95,9 @@ public class Controller implements KeyListener, ActionListener, GameObserver {
     public void keyReleased(KeyEvent e) {
         switch (e.getKeyCode()) {
             case (KeyEvent.VK_A):
-            case (KeyEvent.VK_LEFT):
                 gameControl.getPlayer().moveLeft();
                 break;
             case (KeyEvent.VK_D):
-            case (KeyEvent.VK_RIGHT):
                 gameControl.getPlayer().moveRight();
                 break;
             case (KeyEvent.VK_SPACE):
