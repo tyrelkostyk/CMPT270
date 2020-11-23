@@ -1,0 +1,72 @@
+/*
+ * CMPT 270
+ * Assignment 6A
+ * Question One
+ *
+ * A6Q1.txt
+ *
+ * Tyrel Kostyk
+ * 11216033
+ * TCK290
+ *
+ * November 27 2020
+ */
+
+================================================================================
+Question A6Q1 - 1. Changing the Green buttons to Red buttons
+================================================================================
+
+## File: view/HighScoresPanel.java
+
+Previous:
+    backButton.setForeground(Color.GREEN);
+New:
+    backButton.setForeground(Color.RED);
+
+
+## File: view/WelcomePanel.java
+
+Previous:
+    newGameButton.setForeground(Color.GREEN);
+New:
+    newGameButton.setForeground(Color.RED);
+
+Previous:
+    highScoreButton.setForeground(Color.GREEN);
+New:
+    highScoreButton.setForeground(Color.RED);
+
+Previous:
+    quitButton.setForeground(Color.GREEN);
+New:
+    quitButton.setForeground(Color.RED);
+
+
+================================================================================
+Question A6Q1 - 2. Allowing movement with keys A and D
+================================================================================
+
+## File: control/Controller.java
+
+Previous:
+    case (KeyEvent.VK_LEFT):
+        gameControl.getPlayer().moveLeft();
+        break;
+    case (KeyEvent.VK_RIGHT):
+        gameControl.getPlayer().moveRight();
+        break;    
+New:
+    case (KeyEvent.VK_A):
+    case (KeyEvent.VK_LEFT):
+        gameControl.getPlayer().moveLeft();
+        break;
+    case (KeyEvent.VK_D):
+    case (KeyEvent.VK_RIGHT):
+        gameControl.getPlayer().moveRight();
+        break;
+
+
+================================================================================
+Question A6Q1 - 2. Allowing movement with keys A and D
+================================================================================
+
