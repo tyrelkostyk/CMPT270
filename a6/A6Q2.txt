@@ -17,16 +17,16 @@ Question A6Q2 - 1. Planning the improvement of the Game's graphical appearance
 ================================================================================
 
 ## File: SpaceInvaders.properties
-    - add more images to the "invader" property, allowing for more fluid movement
-    - add an image specifically for when the invader is launching a missile
+    - Add more images to the "invader" property, allowing for more fluid movement
+    - Add an image specifically for when the invader is launching a missile
 
 ## File: model/Invader.java
-    - double the drawing frequency (so the Invader image is updated twice as often)
+    - Double the drawing frequency (so the Invader image is updated twice as often)
         Previous:
             public static final int CHANGE_FREQ = 12;
         New:
             public static final int CHANGE_FREQ = 6;
-    - update the invader's drawing every Invader::update() call
+    - Update the invader's drawing every Invader::update() call
     - BUT only update the Invader's movements (or other actions) every second update()
         - This ensures that the gameplay and behaviour of the Invaders doesn't change,
           since we doubled the update frequency
@@ -37,23 +37,44 @@ Question A6Q2 - 2. Planning the feature that allows users to set their controls
 ================================================================================
 
 ## File: SpaceInvaders.properties
-    - add row: move_left_key="A"
-    - add row: move_right_key="D"
-    - add row: fire_nuke_key="SPACE"
-    - add row: pause_key="ESCAPE"
-        - these will be configurable by the user
+    - Add row: move_left_key="A"
+    - Add row: move_right_key="D"
+    - Add row: fire_laser_key="SPACE"
+    - Add row: pause_key="ESCAPE"
+        - these will be configurable by the user (outside of the application)
 
 ## File: control/Controls.java
-    - add four private variables (ints) for the configurable control keys
-    - add a method that uses PropertiesDiskStorage to scan for the four "_key"
+    - Add four private variables (ints) for the configurable control keys
+        - KEY_MOVE_LEFT
+        - KEY_MOVE_RIGHT
+        - KEY_FIRE_LASER
+        - KEY_PAUSE
+    - Modify keyReleased() so that it uses the private variables in the switch statement,
+      not the hardcoded values like KeyEvent.VK_A, etc.
+    - Add a method that uses PropertiesDiskStorage to scan for the four "_key"
       properties that determine the user's controls
-        - invoke this method during initialization
-        - it will set four private variables that will be used in the keyReleased()
+        - Invoke this method during initialization
+        - It will set four private variables that will be used in the keyReleased()
           method to perform actions in the game
+        - Something like:
+            String keyNameMoveLeft = PropertiesDiskStorage.getInstance().getProperty("move_left_key");
+        - Would need a way of converting the string input into a KeyEvent KeyCode value.
+            - Could use a (lengthy) switch statement - simpliest solution, but not elegant
+                - Might be able to "offload" this to a different (new?) class, to avoid
+                  clutter in the Controller class.
+            - Might be able to call some lookup table that converts string names to KeyCodes
+                - Will investigate further
+                - Oh, it's just ASCII! I might be able to use that to my advantage 
+    
+## File: model/GameObject.java
+    - Would need to modify loadImageNames() so that it only loads image files
+        - i.e. it would ignore the move_left_key line, etc.
 
 BONUS:
     - Add another interface element that would allow the user to SET the controls
       from WITHIN the game, instead of having to edit the configuration directly.
+      - This would involve writing to the SpaceInvaders.properties file, which would
+        pose its own set of risks and challenges (but shouldn't be that hard)
 
 
 ================================================================================
@@ -61,4 +82,4 @@ Question A6Q2 - 3. Planning the new "NUKE" weapon implementation
 ================================================================================
 
 ## File: SpaceInvaders.properties
-    - add row: fire_nuke_key="F"
+    - Add row: fire_nuke_key="F"
