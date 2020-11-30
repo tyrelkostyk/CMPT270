@@ -10,14 +10,32 @@
 import java.util.*;
 
 
+/**
+ * A model of a Doctor.
+ */
 public class HospitalSystem {
 
+	/**
+	 * The ward contained within this Hospital System.
+	 */
 	private Ward ward;
 
+	/**
+	 * A collection of patients identified by their health card number.
+	 */
 	private Map<String, Patient> patients;
 
+	/**
+	 * A collection of doctors identified by their name.
+	 */
 	private Map<String, Doctor> doctors;
 
+	/**
+	 * The constructor for the HositalSystem.
+	 * @param wardName the name to assign to the new ward
+	 * @param firstBedLabel the label of the first bed
+	 * @param lastBedLabel the label of the last bed
+	 */
 	public HospitalSystem( String wardName, int firstBedLabel, int lastBedLabel )
 	{
 		this.ward = new Ward( wardName, firstBedLabel, lastBedLabel );
@@ -25,24 +43,45 @@ public class HospitalSystem {
 		this.doctors = new HashMap<String, Doctor>();
 	}
 
-	public void addPatient( patientName, patientHealthNumber )
+	/**
+	 * Adds a patient into the hospital system.
+	 * @param patientName the name of the patient.
+	 * @param patientHealthNumber the patient's health card number.
+	 */
+	public void addPatient( String patientName, String patientHealthNumber )
 	{
 		Patient newPatient = new Patient( patientName, patientHealthNumber );
 		patients.put( patientHealthNumber, newPatient );
 	}
 
-	public void addDoctor( doctorName )
+	/**
+	 * Adds a doctor into the hospital system.
+	 * @param doctorName the name of the doctor.
+	 */
+	public void addDoctor( String doctorName )
 	{
 		Doctor newDoctor = new Doctor( doctorName );
 		doctors.put( doctorName, newDoctor );
 	}
 
+	/**
+	 * Creates an associate between a patient and a doctor.
+	 * @param doctorName the name of the doctor.
+	 * @param patientName the name of the patient.
+	 */
 	public void assignDoctorToPatient( String doctorName, String patientName )
 	{
 		Doctor doc = this.doctors.get( doctorName );
-		this.patients.put( doctorName, doc );
+		Patient pat = this.patients.get( patientName );
+
+		doc.addPatient( pat );
+		pat.addDoctor( doc );
 	}
 
+	/**
+	 * Assigns a bed to a patient within the Hospital.
+	 * @param patientName the name of the patient.
+	 */
 	public void assignBed( String patientName )
 	{
 		// grab the first available bed label
@@ -56,20 +95,31 @@ public class HospitalSystem {
 		this.ward.assignPatientToBed( patient, bed );
 	}
 
+	/**
+	 * Destroys an associate between a patient and a doctor.
+	 * @param doctorName the name of the doctor.
+	 * @param patientName the name of the patient.
+	 */
 	public void dropAssociation( String doctorName, String patientName )
 	{
 		Patient patient = this.patients.get( patientName );
 		Doctor doctor = this.doctors.get( doctorName );
 
-		patient.removeDoctor( doctor );
-		doctor.removePatient( patient );
+		patient.removeDoctor( doctorName );
+		doctor.removePatient( patientName );
 	}
 
+	/**
+	 * Returns the state of the HospitalSystem as a String.
+	 */
 	public String systemState()
 	{
 		return this.toString();
 	}
 
+	/**
+	 * Returns the state of the HospitalSystem as a String.
+	 */
 	public String toString()
 	{
 		// grab the string representation of the ward
@@ -81,9 +131,10 @@ public class HospitalSystem {
 		// grab the string representation of the doctors
 		String docString = "";
 		if ( this.doctors.size() > 0 ) {
-			docString = "\nDoctors:"
-			for ( Doctor doc : this.doctors ) {
-				docString += doc.toString();
+			docString = "\nDoctors:";
+			Set<String> docKeySet = this.doctors.keySet();
+			for ( String name : docKeySet ) {
+				docString += this.doctors.get(name).toString();
 			}
 		}
 
@@ -91,14 +142,14 @@ public class HospitalSystem {
 		String patientString = "";
 		if (this.patients.size() > 0) {
 			patientString = "\nPatients:";
-			for ( Patient pat : this.patients ) {
-				patientString += pat.toString();
+			Set<String> patKeySet = this.patients.keySet();
+			for ( String name : patKeySet ) {
+				patientString += this.patients.get(name).toString();
 			}
 		}
 
 		return super.toString() + wardString + docString + patientString;
 	}
-
 
 
 	public static void main( String[] args )
