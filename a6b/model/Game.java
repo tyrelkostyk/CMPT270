@@ -1,3 +1,18 @@
+/*
+ * CMPT 270
+ * Assignment Six, Part B
+ * Question three
+ *
+ * model/Game.java
+ *
+ * Tyrel Kostyk
+ * 11216033
+ * TCK290
+ *
+ * December 7 2020
+ */
+
+
 package model;
 
 import java.util.List;
@@ -34,8 +49,8 @@ public class Game implements GameControl, GameInfoProvider {
     /** The object to represent the player of the game. */
     protected Player player;
 
-    /** The object to represent a laser shot by the player. */
-    protected Laser laser;
+    /** The list of lasers shot by the player. */
+    protected List<Laser> laserList;
 
     /** The list of the invaders. */
     protected List<Invader> invadersList;
@@ -72,6 +87,7 @@ public class Game implements GameControl, GameInfoProvider {
         this.width = width;
         this.height = height;
 
+        laserList = new LinkedList<Laser>();
         invadersList = new LinkedList<Invader>();
         blocksList = new LinkedList<Block>();
         missilesList = new LinkedList<Missile>();
@@ -153,7 +169,6 @@ public class Game implements GameControl, GameInfoProvider {
      */
     private void initializeNextLevel() {
         level = level + 1;
-        laser = null;
         player.moveToLeftSide();
         for (int i = 0; i < INVADER_ROWS; i++) {
             for (int j = 0; j < INVADER_COLUMNS; j++) {
@@ -230,10 +245,13 @@ public class Game implements GameControl, GameInfoProvider {
                 explosionIterator.remove();
         }
 
-        if (laser != null) {
-            laser.update();
+        Iterator<Laser> laserIterator = laserList.iterator();
+        while (laserIterator.hasNext()) {
+            Laser laser = laserIterator.next();
+            if (!laser.isDead())
+                laser.update();
             if (laser.isDead())
-                laser = null;
+                laserIterator.remove();
         }
 
         Iterator<Missile> missileIterator = missilesList.iterator();
@@ -337,7 +355,7 @@ public class Game implements GameControl, GameInfoProvider {
         for (Missile missile : missilesList)
             gameObjects.add(missile);
 
-        if (laser != null)
+        for (Laser laser : laserList)
             gameObjects.add(laser);
 
         for (Explosion explosion : explosionsList)
@@ -360,12 +378,7 @@ public class Game implements GameControl, GameInfoProvider {
      * 
      * @param laser the laser to be added to the game
      */
-    protected void addLaser(Laser laser) {
-        if (this.laser != null)
-            throw new RuntimeException("Cannot shoot a laser when one already exists.");
-
-        this.laser = laser;
-    }
+    protected void addLaser(Laser laser) { laserList.add(laser); }
 
     /**
      * Add an explosion to the game.

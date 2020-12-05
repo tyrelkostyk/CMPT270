@@ -1,4 +1,26 @@
+/*
+ * CMPT 270
+ * Assignment Six, Part B
+ * Question three
+ *
+ * model/Player.java
+ *
+ * Tyrel Kostyk
+ * 11216033
+ * TCK290
+ *
+ * December 7 2020
+ */
+
+
 package model;
+
+
+import gameResults.HighScores;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * The player in the space invaders game.
@@ -22,6 +44,9 @@ public class Player extends GameObject {
     /* The current score for the Player. */
     protected int score;
 
+    /* The ready status of the Tank's Laser gun. */
+    protected boolean laserReady;
+
     /** How frequently (in terms of ticks) the player is to change image. */
     public static final int CHANGE_FREQ = 0;
 
@@ -34,6 +59,7 @@ public class Player extends GameObject {
         height = HEIGHT;
         lives = INITIAL_NUM_LIVES;
         score = 0;
+        laserReady = true;
     }
 
     /**
@@ -56,13 +82,25 @@ public class Player extends GameObject {
     }
 
     /**
-     * If canFire, fire a laser.
+     * If laser is ready, fire a laser.
      */
     public void fire() {
-        if (game.laser == null) {
+        // only fire laser if it's ready - otherwise, do nothing
+        if (laserReady) {
+            // laser fired; no longer ready
+            laserReady = false;
+
+            // create and add laser to the Game
             int laserX = x + (width - Laser.WIDTH) / 2;
             int laserY = y - Laser.HEIGHT;
             game.addLaser(new Laser(laserX, laserY, game));
+
+            // laser will be ready again after 500ms
+            Timer coolDownTimer = new Timer(500, new ActionListener() {
+                public void actionPerformed(ActionEvent e) { laserReady = true; }
+            });
+            coolDownTimer.setRepeats(false);    // one-shot timer
+            coolDownTimer.start();
         }
     }
 
